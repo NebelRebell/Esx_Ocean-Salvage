@@ -17,7 +17,8 @@ AddEventHandler('esx_treasurehunter:GiveItem', function()
 		local amount = Config.Zones.Vente.ItemAdd
 		local item = Config.Zones.Vente.ItemDb_name
 		xPlayer.addInventoryItem(item, amount)
-		TriggerClientEvent('esx:showNotification', _source, 'Salvage Collected ~g~ move on.')
+		TriggerClientEvent('esx:showNotification', _source, 'Salvage Collected ~g~ move on.') --EN
+		-- TriggerClientEvent('esx:showNotification', _source, 'Erfolgreich geborgen~g~ weiter gehts!') --DE
 	end
 
 end)
@@ -34,7 +35,8 @@ local function Vente(source)
 			local Quantity = xPlayer.getInventoryItem(Config.Zones.Vente.ItemRequires).count
 
 			if Quantity < Config.Zones.Vente.ItemRemove then
-				TriggerClientEvent('esx:showNotification', _source, '~r~You have no more bills to cash.')
+				TriggerClientEvent('esx:showNotification', _source, '~r~You have no more bills to cash.') --EN
+				-- TriggerClientEvent('esx:showNotification', _source, '~r~Du hast keinen Rechnungen mehr zu bezahlen.') --DE
 				PlayersVente[_source] = false
 			else
 				local amount = Config.Zones.Vente.ItemRemove
@@ -42,7 +44,8 @@ local function Vente(source)
 				Citizen.Wait(1500)
 				xPlayer.removeInventoryItem(item, amount)
 				xPlayer.addMoney(Config.Zones.Vente.ItemPrice)
-				TriggerClientEvent('esx:showNotification', _source, 'You have earned ~g~$' .. Config.Zones.Vente.ItemPrice)
+				TriggerClientEvent('esx:showNotification', _source, 'You have earned ~g~$' .. Config.Zones.Vente.ItemPrice) --EN
+				-- TriggerClientEvent('esx:showNotification', _source, 'Du hast ~g~$ bekommen.' .. Config.Zones.Vente.ItemPrice) --DE
 				Vente(_source)
 			end
 
@@ -56,11 +59,13 @@ AddEventHandler('esx_treasurehunter:startVente', function()
 	local _source = source
 
 	if PlayersVente[_source] == false then
-		TriggerClientEvent('esx:showNotification', _source, '~r~No bills to cash!')
+		TriggerClientEvent('esx:showNotification', _source, '~r~No bills to cash!') --EN
+		-- TriggerClientEvent('esx:showNotification', _source, '~r~Keine Rechnung, kein Bargeld!') --DE
 		PlayersVente[_source] = false
 	else
 		PlayersVente[_source] = true
-		TriggerClientEvent('esx:showNotification', _source, '~g~Cashing ~w~bills...')
+		TriggerClientEvent('esx:showNotification', _source, '~g~Cashing ~w~bills...') --EN
+		-- TriggerClientEvent('esx:showNotification', _source, '~g~Einlösen von ~w~Rechnungen...') --DE
 		Vente(_source)
 	end
 end)
